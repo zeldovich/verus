@@ -869,12 +869,9 @@ pub assume_specification<'a, Key, Value, S>[ HashMap::<Key, Value, S>::iter ](
     ensures
         obeys_key_model::<Key>() && builds_valid_hashers::<S>() ==> {
             let (index, s) = iter@;
-            let (ks, vs) = s.unzip();
             &&& index == 0
-            &&& ks.to_set() == m@.dom()
-            &&& ks.no_duplicates()
-            &&& vs.to_set() == m@.values()
-            &&& forall|idx: int| 0 <= idx < iter@.1.len() ==> #[trigger] m@[ks[idx]] == vs[idx]
+            &&& s.to_set() == m@.pairs()
+            &&& s.no_duplicates()
         },
 ;
 
